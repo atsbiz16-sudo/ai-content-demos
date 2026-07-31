@@ -5,9 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Content Demos — Тимур Афанасьев</title>
 <meta name="description" content="Маркетинговые интерактивы, собранные вайбкодингом: квизы, лендинги, мини-игры. Портфолио Тимура Афанасьева.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
   :root{
     --paper:#EDEDE7;
@@ -18,9 +16,9 @@
     --mark:#E3F24D;
     --mark-soft:rgba(227,242,77,.5);
     --deep:#0E4F4A;
-    --display:"Unbounded",system-ui,sans-serif;
-    --body:"Golos Text",system-ui,-apple-system,sans-serif;
-    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --display:system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+    --body:system-ui,"Segoe UI",Roboto,Arial,sans-serif;
+    --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
@@ -142,14 +140,15 @@
     </li>
 
     <li>
-      <div class="item is-soon">
+      <a class="item" href="landing.html">
         <div class="item-top">
           <span class="kind">Лендинг</span>
-          <span class="state soon">В работе</span>
+          <span class="state ready">Готов</span>
         </div>
-        <h2>Одностраничник под запуск продукта</h2>
-        <p>Структура, тексты и вёрстка целиком через AI, с ручной доводкой типографики и адаптива.</p>
-      </div>
+        <h2>Страница-приглашение на разбор рутины</h2>
+        <p>Ведёт на квиз и объясняет, зачем его проходить. В основе — рабочая неделя из сорока клеток, где закрашенное маркером и есть та самая рутина: цифра становится видимой раньше, чем читается текст.</p>
+        <span class="go">Открыть лендинг →</span>
+      </a>
     </li>
 
     <li>
