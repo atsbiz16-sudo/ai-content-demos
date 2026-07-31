@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Что в вашем бизнесе уже можно отдать ИИ</title>
+<meta name="description" content="Восемь вопросов о рутине в вашей компании. На выходе — сколько часов в неделю уходит впустую и что из этого забирает ИИ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEDE7;
+    --surface:#FBFBF8;
+    --ink:#14202A;
+    --muted:#5D6B78;
+    --rule:#D3D5CD;
+    --mark:#E3F24D;
+    --mark-soft:rgba(227,242,77,.5);
+    --deep:#0E4F4A;
+    --display:"Unbounded",system-ui,sans-serif;
+    --body:"Golos Text",system-ui,-apple-system,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background-color:var(--paper);
+    background-image:
+      repeating-linear-gradient(to bottom,transparent 0 31px,rgba(20,32,42,.055) 31px 32px),
+      repeating-linear-gradient(to right,transparent 0 31px,rgba(20,32,42,.035) 31px 32px);
+    line-height:1.5;
+    min-height:100vh;
+    padding:24px 16px 56px;
+  }
+  .sheet{max-width:680px;margin:0 auto}
+
+  /* ---------- shared bits ---------- */
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--rule);
+    border-radius:2px;
+    padding:32px 28px;
+    box-shadow:0 1px 0 rgba(20,32,42,.06),0 12px 28px -22px rgba(20,32,42,.5);
+  }
+  .btn{
+    font-family:var(--body);
+    font-size:16px;
+    font-weight:600;
+    color:var(--ink);
+    background:var(--mark);
+    border:1px solid var(--ink);
+    border-radius:2px;
+    padding:14px 26px;
+    cursor:pointer;
+    transition:transform .12s ease,box-shadow .12s ease;
+    box-shadow:3px 3px 0 var(--ink);
+  }
+  .btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+  .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+  .btn[disabled]{opacity:.35;cursor:not-allowed;box-shadow:3px 3px 0 var(--rule);border-color:var(--rule)}
+  .btn-quiet{
+    background:none;border:none;box-shadow:none;
+    font-family:var(--mono);font-size:12px;color:var(--muted);
+    text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:8px 0;
+  }
+  .btn-quiet:hover{color:var(--ink)}
+  :focus-visible{outline:2px solid var(--deep);outline-offset:3px}
+
+  .screen{display:none}
+  .screen.is-active{display:block;animation:rise .34s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  /* ---------- intro ---------- */
+  .brand{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+  .intro h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(28px,6.4vw,44px);
+    line-height:1.08;
+    letter-spacing:-.02em;
+    margin-bottom:18px;
+  }
+  .intro h1 em{font-style:normal;position:relative;white-space:nowrap}
+  .intro h1 em::after{
+    content:"";position:absolute;left:-2px;right:-2px;bottom:.06em;height:.42em;
+    background:var(--mark);z-index:-1;transform:skewX(-3deg);
+  }
+  .intro h1 span{position:relative;z-index:1}
+  .lede{font-size:17px;color:var(--muted);max-width:46ch;margin-bottom:26px}
+  .facts{
+    display:flex;gap:26px;flex-wrap:wrap;
+    border-top:1px solid var(--rule);padding-top:16px;margin-bottom:28px;
+  }
+  .fact b{display:block;font-family:var(--mono);font-size:20px;font-weight:500;color:var(--deep)}
+  .fact span{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- question ---------- */
+  .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+  .track{height:3px;background:var(--rule);margin-bottom:26px;position:relative}
+  .track i{position:absolute;inset:0 auto 0 0;background:var(--deep);transition:width .3s ease}
+  .qtext{
+    font-family:var(--display);font-weight:500;
+    font-size:clamp(20px,4.4vw,26px);line-height:1.24;letter-spacing:-.01em;
+    margin-bottom:24px;
+  }
+  .opts{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .opt{
+    position:relative;width:100%;text-align:left;
+    font-family:var(--body);font-size:16px;color:var(--ink);
+    background:none;border:1px solid var(--rule);border-radius:2px;
+    padding:15px 16px 15px 46px;cursor:pointer;
+    transition:border-color .15s ease;
+  }
+  .opt:hover{border-color:var(--ink)}
+  .opt::before{
+    content:"";position:absolute;left:16px;top:50%;transform:translateY(-50%);
+    width:15px;height:15px;border:1px solid var(--muted);border-radius:50%;
+  }
+  .opt .swipe{
+    position:absolute;left:40px;right:8px;top:50%;transform:translateY(-50%);
+    height:1.55em;background:var(--mark-soft);z-index:0;
+    width:0;transition:width .28s cubic-bezier(.4,0,.2,1);
+  }
+  .opt span{position:relative;z-index:1}
+  .opt.is-picked{border-color:var(--ink)}
+  .opt.is-picked::before{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 2px var(--surface)}
+  .opt.is-picked .swipe{width:calc(100% - 48px)}
+
+  /* ---------- result ---------- */
+  .verdict{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);margin-bottom:14px}
+  .tally{display:flex;align-items:flex-end;gap:12px;margin-bottom:6px}
+  .tally b{font-family:var(--display);font-weight:700;font-size:clamp(52px,15vw,86px);line-height:.9;letter-spacing:-.03em}
+  .tally i{font-style:normal;font-family:var(--body);font-size:17px;color:var(--muted);padding-bottom:8px}
+  .tally-note{font-size:15px;color:var(--muted);margin-bottom:28px}
+  .rhead{
+    font-family:var(--display);font-weight:500;font-size:19px;letter-spacing:-.01em;
+    margin:32px 0 14px;padding-top:20px;border-top:1px solid var(--rule);
+  }
+  .steps{list-style:none;display:flex;flex-direction:column;gap:16px}
+  .step{display:flex;gap:14px;align-items:flex-start}
+  .step b{
+    font-family:var(--mono);font-size:12px;font-weight:500;color:var(--surface);
+    background:var(--deep);border-radius:2px;padding:3px 7px;margin-top:2px;white-space:nowrap;
+  }
+  .step p{font-size:15.5px}
+  .step p strong{font-weight:600}
+  .marks{list-style:none;display:flex;flex-direction:column;gap:0;margin-top:4px}
+  .mark-row{
+    display:flex;justify-content:space-between;gap:14px;align-items:baseline;
+    padding:9px 0;border-bottom:1px dotted var(--rule);font-size:14.5px;
+  }
+  .mark-row .lbl{color:var(--muted);flex:1}
+  .mark-row .hit{position:relative;padding:0 3px}
+  .mark-row .hit::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:.9em;background:var(--mark-soft);z-index:-1}
+  .mark-row .h{font-family:var(--mono);font-size:13px;color:var(--deep);white-space:nowrap}
+  .mark-row .h.zero{color:var(--rule)}
+  .cta{margin-top:30px;padding-top:22px;border-top:1px solid var(--rule);display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+
+  .colophon{
+    max-width:680px;margin:22px auto 0;
+    font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--muted);
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  .colophon a{color:var(--muted)}
+
+  @media (max-width:520px){
+    .card{padding:24px 18px}
+    .facts{gap:18px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<main class="sheet">
+
+  <!-- INTRO -->
+  <section class="screen is-active intro" id="s-intro" aria-labelledby="t-intro">
+    <div class="brand">
+      <span class="eyebrow">Разбор рутины · 8 вопросов</span>
+      <span class="eyebrow">≈ 2 минуты</span>
+    </div>
+    <div class="card">
+      <h1 id="t-intro">Что в вашем бизнесе <em><span>уже можно</span></em> отдать ИИ</h1>
+      <p class="lede">Восемь вопросов о том, как в компании устроена ежедневная рутина. В конце — сколько часов в неделю она съедает и что из этого забирается автоматикой уже сейчас.</p>
+      <div class="facts">
+        <div class="fact"><b>8</b><span>вопросов</span></div>
+        <div class="fact"><b>2</b><span>минуты</span></div>
+        <div class="fact"><b>0</b><span>полей о себе</span></div>
+      </div>
+      <button class="btn" id="go">Начать разбор</button>
+    </div>
+  </section>
+
+  <!-- QUESTION -->
+  <section class="screen" id="s-quiz" aria-labelledby="q-text">
+    <div class="qhead">
+      <span class="eyebrow" id="q-count">Вопрос 1 из 8</span>
+      <button class="btn-quiet" id="back" hidden>Назад</button>
+    </div>
+    <div class="track"><i id="bar" style="width:0%"></i></div>
+    <div class="card">
+      <h2 class="qtext" id="q-text"></h2>
+      <ul class="opts" id="q-opts"></ul>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="screen" id="s-result" aria-labelledby="r-title">
+    <div class="brand"><span class="eyebrow">Результат разбора</span></div>
+    <div class="card">
+      <p class="verdict" id="r-verdict"></p>
+      <div class="tally">
+        <b id="r-hours">0</b>
+        <i>часов в неделю<br>уходит на рутину</i>
+      </div>
+      <p class="tally-note" id="r-note"></p>
+
+      <h3 class="rhead" id="r-title">С чего начать</h3>
+      <ul class="steps" id="r-steps"></ul>
+
+      <h3 class="rhead">Ваши ответы</h3>
+      <ul class="marks" id="r-marks"></ul>
+
+      <div class="cta">
+        <button class="btn" id="again">Пройти заново</button>
+        <span class="eyebrow">Ничего не сохраняется и никуда не отправляется</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <span>Прототип лидмагнита · собран вайбкодингом через Claude Code</span>
+  <span>Тимур Афанасьев · <a href="https://t.me/Tumyp716">@Tumyp716</a></span>
+</footer>
+
+<script>
+const QUESTIONS = [
+  {
+    label:"Приём заявок",
+    text:"Как заявки от клиентов попадают в вашу систему?",
+    opts:[
+      {t:"Менеджер вручную переносит из почты и мессенджеров",h:6},
+      {t:"Часть автоматически, часть руками",h:3},
+      {t:"Всё падает в CRM само",h:0}
+    ],
+    fix:"<strong>Приём заявок без ручного ввода.</strong> Почта, форма и мессенджеры → CRM одним потоком: проверка дублей, нормализация телефонов, повторная отправка при сбое."
+  },
+  {
+    label:"Типовые вопросы",
+    text:"Как часто сотрудники отвечают клиентам на одно и то же?",
+    opts:[
+      {t:"Постоянно — это половина переписки",h:7},
+      {t:"Регулярно, но терпимо",h:3},
+      {t:"Есть готовые ответы или бот",h:0}
+    ],
+    fix:"<strong>Бот на ваших же материалах.</strong> Закрывает типовые вопросы сам и передаёт человеку только то, где нужен человек."
+  },
+  {
+    label:"После созвонов",
+    text:"Что остаётся после переговоров и созвонов?",
+    opts:[
+      {t:"Ничего не фиксируем, держим в голове",h:4},
+      {t:"Кто-то пишет заметки руками",h:3},
+      {t:"Есть расшифровка и краткое резюме",h:0}
+    ],
+    fix:"<strong>Расшифровка встреч с итогами.</strong> Договорённости, сроки и ответственные сами превращаются в задачи."
+  },
+  {
+    label:"Отчёты",
+    text:"Как готовятся регулярные отчёты?",
+    opts:[
+      {t:"Собираем руками из нескольких источников",h:5},
+      {t:"Полуавтомат, но сверяем глазами",h:2},
+      {t:"Собираются и приходят сами",h:0}
+    ],
+    fix:"<strong>Отчёт по расписанию.</strong> Данные подтягиваются из источников сами, человек получает готовое и только принимает решение."
+  },
+  {
+    label:"Документы",
+    text:"Как оформляются документы и счета?",
+    opts:[
+      {t:"Каждый раз заполняем шаблон руками",h:4},
+      {t:"Шаблоны есть, часть полей вручную",h:2},
+      {t:"Генерируются из данных сделки",h:0}
+    ],
+    fix:"<strong>Документы из данных сделки.</strong> Счёт, договор и акт собираются по кнопке — без опечаток в реквизитах."
+  },
+  {
+    label:"Поиск внутри",
+    text:"Как находите информацию внутри компании?",
+    opts:[
+      {t:"Спрашиваем друг у друга в чате",h:4},
+      {t:"Папки есть, но ищем долго",h:2},
+      {t:"База знаний, находим за минуту",h:0}
+    ],
+    fix:"<strong>База знаний с поиском по смыслу.</strong> Ответ находится по вопросу обычными словами, а не по точному названию файла."
+  },
+  {
+    label:"Тексты и КП",
+    text:"Как готовите коммерческие предложения и тексты?",
+    opts:[
+      {t:"Пишем с нуля почти каждый раз",h:5},
+      {t:"Есть заготовки, дорабатываем",h:2},
+      {t:"Собираются по шаблону, человек правит",h:0}
+    ],
+    fix:"<strong>КП из ваших удачных примеров.</strong> Черновик собирается за минуту, человек тратит время только на смысл."
+  },
+  {
+    label:"Новый сотрудник",
+    text:"Что происходит, когда выходит новый сотрудник?",
+    opts:[
+      {t:"Учим лично, каждый раз заново",h:4},
+      {t:"Инструкции есть, но устарели",h:2},
+      {t:"Онбординг ведёт человека сам",h:0}
+    ],
+    fix:"<strong>Онбординг, который ведёт сам.</strong> Новичок идёт по шагам и задаёт вопросы боту, а не отвлекает команду."
+  }
+];
+
+const TIERS = [
+  {max:8,  v:"Вы уже впереди рынка",     n:"Основное закрыто. Дальше выигрыш дают не крупные внедрения, а точечная доводка того, что уже работает."},
+  {max:18, v:"Точечные утечки времени",  n:"Система в целом выстроена, но два-три процесса всё ещё держатся на человеке. Их снимают быстро и почти без бюджета."},
+  {max:28, v:"Рутина съедает команду",   n:"Заметная часть недели уходит на работу, которую никто не заказывал. Здесь автоматизация окупается быстрее всего."},
+  {max:99, v:"Половина недели — вхолостую",n:"Компания работает, но люди заняты переносом данных, а не задачами. Начинать стоит с одного процесса, а не со всех сразу."}
+];
+
+const $ = id => document.getElementById(id);
+let idx = 0;
+const answers = new Array(QUESTIONS.length).fill(null);
+
+function show(id){
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("is-active"));
+  $(id).classList.add("is-active");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function render(){
+  const q = QUESTIONS[idx];
+  $("q-count").textContent = `Вопрос ${idx+1} из ${QUESTIONS.length}`;
+  $("bar").style.width = (idx/QUESTIONS.length*100) + "%";
+  $("back").hidden = idx === 0;
+  $("q-text").textContent = q.text;
+
+  const list = $("q-opts");
+  list.innerHTML = "";
+  q.opts.forEach((o,i) => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.className = "opt" + (answers[idx] === i ? " is-picked" : "");
+    b.innerHTML = `<i class="swipe"></i><span>${o.t}</span>`;
+    b.addEventListener("click", () => pick(i));
+    li.appendChild(b);
+    list.appendChild(li);
+  });
+}
+
+function pick(i){
+  answers[idx] = i;
+  render();
+  setTimeout(() => {
+    if (idx < QUESTIONS.length - 1){ idx++; render(); }
+    else finish();
+  }, 340);
+}
+
+function countUp(el, target){
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+    el.textContent = target; return;
+  }
+  const start = performance.now(), dur = 900;
+  const tick = now => {
+    const p = Math.min((now - start) / dur, 1);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function finish(){
+  const total = answers.reduce((s,a,i) => s + QUESTIONS[i].opts[a].h, 0);
+  const tier = TIERS.find(t => total <= t.max);
+
+  $("r-verdict").textContent = tier.v;
+  countUp($("r-hours"), total);
+
+  const hoursYear = total * 48;
+  const pct = Math.round(total / 40 * 100);
+  $("r-note").textContent = total > 0
+    ? `${tier.n} За год набегает около ${hoursYear.toLocaleString("ru-RU")} часов — это ${pct}% времени одного сотрудника на полной ставке.`
+    : tier.n;
+
+  const ranked = QUESTIONS
+    .map((q,i) => ({fix:q.fix, h:q.opts[answers[i]].h}))
+    .filter(x => x.h > 0)
+    .sort((a,b) => b.h - a.h)
+    .slice(0,3);
+
+  $("r-steps").innerHTML = ranked.length
+    ? ranked.map(x => `<li class="step"><b>−${x.h} ч</b><p>${x.fix}</p></li>`).join("")
+    : `<li class="step"><b>0 ч</b><p>Явных потерь не видно. Следующий шаг — не автоматизировать ещё что-то, а измерить, где реально теряется время.</p></li>`;
+
+  $("r-marks").innerHTML = QUESTIONS.map((q,i) => {
+    const o = q.opts[answers[i]];
+    return `<li class="mark-row">
+      <span class="lbl">${q.label}</span>
+      <span class="${o.h ? "hit" : ""}">${o.t}</span>
+      <span class="h ${o.h ? "" : "zero"}">${o.h ? "+" + o.h + " ч" : "0 ч"}</span>
+    </li>`;
+  }).join("");
+
+  show("s-result");
+}
+
+$("go").addEventListener("click", () => { show("s-quiz"); render(); });
+$("back").addEventListener("click", () => { if (idx > 0){ idx--; render(); } });
+$("again").addEventListener("click", () => {
+  idx = 0; answers.fill(null); show("s-intro");
+});
+</script>
+</body>
+</html>

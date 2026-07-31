@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Content Demos — Тимур Афанасьев</title>
+<meta name="description" content="Маркетинговые интерактивы, собранные вайбкодингом: квизы, лендинги, мини-игры. Портфолио Тимура Афанасьева.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDEDE7;
+    --surface:#FBFBF8;
+    --ink:#14202A;
+    --muted:#5D6B78;
+    --rule:#D3D5CD;
+    --mark:#E3F24D;
+    --mark-soft:rgba(227,242,77,.5);
+    --deep:#0E4F4A;
+    --display:"Unbounded",system-ui,sans-serif;
+    --body:"Golos Text",system-ui,-apple-system,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background-color:var(--paper);
+    background-image:
+      repeating-linear-gradient(to bottom,transparent 0 31px,rgba(20,32,42,.055) 31px 32px),
+      repeating-linear-gradient(to right,transparent 0 31px,rgba(20,32,42,.035) 31px 32px);
+    line-height:1.5;
+    min-height:100vh;
+    padding:24px 16px 56px;
+  }
+  .sheet{max-width:680px;margin:0 auto}
+  .eyebrow{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .brand{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+
+  .masthead{
+    background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+    padding:32px 28px;margin-bottom:18px;
+    box-shadow:0 1px 0 rgba(20,32,42,.06),0 12px 28px -22px rgba(20,32,42,.5);
+  }
+  .masthead h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(26px,5.6vw,38px);line-height:1.1;letter-spacing:-.02em;
+    margin-bottom:16px;
+  }
+  .masthead h1 em{font-style:normal;position:relative;white-space:nowrap}
+  .masthead h1 em::after{
+    content:"";position:absolute;left:-2px;right:-2px;bottom:.06em;height:.42em;
+    background:var(--mark);z-index:-1;transform:skewX(-3deg);
+  }
+  .masthead h1 span{position:relative;z-index:1}
+  .lede{font-size:17px;color:var(--muted);max-width:52ch}
+  .toolbar{
+    display:flex;gap:8px 20px;flex-wrap:wrap;
+    border-top:1px solid var(--rule);margin-top:22px;padding-top:16px;
+  }
+  .toolbar span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .toolbar b{color:var(--deep);font-weight:500}
+
+  .list{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .item{
+    display:block;text-decoration:none;color:inherit;
+    background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+    padding:22px 24px;
+    transition:border-color .15s ease,transform .15s ease;
+  }
+  a.item:hover{border-color:var(--ink);transform:translateY(-2px)}
+  a.item:focus-visible{outline:2px solid var(--deep);outline-offset:3px}
+  .item-top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:10px}
+  .kind{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .state{
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    padding:3px 8px;border-radius:2px;white-space:nowrap;
+  }
+  .state.ready{background:var(--mark);color:var(--ink)}
+  .state.soon{background:none;color:var(--muted);border:1px dashed var(--rule)}
+  .item h2{
+    font-family:var(--display);font-weight:500;
+    font-size:clamp(18px,3.8vw,21px);line-height:1.25;letter-spacing:-.01em;margin-bottom:8px;
+  }
+  .item p{font-size:15.5px;color:var(--muted)}
+  .item .go{
+    display:inline-block;margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--ink);
+    border-bottom:2px solid var(--mark);padding-bottom:2px;
+  }
+  .item.is-soon{opacity:.62}
+
+  .colophon{
+    max-width:680px;margin:22px auto 0;
+    font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--muted);
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  }
+  .colophon a{color:var(--muted)}
+
+  @media (max-width:520px){
+    .masthead{padding:24px 18px}
+    .item{padding:18px 18px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<main class="sheet">
+  <div class="brand">
+    <span class="eyebrow">Тимур Афанасьев</span>
+    <span class="eyebrow">Маркетинговые интерактивы</span>
+  </div>
+
+  <header class="masthead">
+    <h1>Собрано <em><span>вайбкодингом</span></em>, доведено руками</h1>
+    <p class="lede">Небольшие маркетинговые продукты, которые я делаю целиком через AI-инструменты: постановка задачи, промпт, генерация, правка кода и текста до готового результата. Каждый открывается по ссылке и работает без установки.</p>
+    <div class="toolbar">
+      <span>Инструмент: <b>Claude Code</b></span>
+      <span>Стек: <b>HTML · CSS · JS</b></span>
+      <span>Зависимостей: <b>нет</b></span>
+    </div>
+  </header>
+
+  <ul class="list">
+    <li>
+      <a class="item" href="quiz/">
+        <div class="item-top">
+          <span class="kind">Квиз · лидмагнит</span>
+          <span class="state ready">Готов</span>
+        </div>
+        <h2>Что в вашем бизнесе уже можно отдать ИИ</h2>
+        <p>Восемь вопросов о рутине компании. На выходе — сколько часов в неделю она съедает, во что это обходится за год и с каких трёх процессов начинать. Ответы подсвечиваются маркером, итог собирается в размеченный лист.</p>
+        <span class="go">Пройти квиз →</span>
+      </a>
+    </li>
+
+    <li>
+      <div class="item is-soon">
+        <div class="item-top">
+          <span class="kind">Лендинг</span>
+          <span class="state soon">В работе</span>
+        </div>
+        <h2>Одностраничник под запуск продукта</h2>
+        <p>Структура, тексты и вёрстка целиком через AI, с ручной доводкой типографики и адаптива.</p>
+      </div>
+    </li>
+
+    <li>
+      <div class="item is-soon">
+        <div class="item-top">
+          <span class="kind">Мини-игра</span>
+          <span class="state soon">В работе</span>
+        </div>
+        <h2>Интерактив для промо-страницы</h2>
+        <p>Короткая механика на один заход — формат, который держит внимание дольше баннера.</p>
+      </div>
+    </li>
+  </ul>
+</main>
+
+<footer class="colophon">
+  <span>Прототипы для портфолио · без внешних библиотек</span>
+  <span><a href="https://t.me/Tumyp716">@Tumyp716</a> · <a href="https://github.com/atsbiz16-sudo">github.com/atsbiz16-sudo</a></span>
+</footer>
+
+</body>
+</html>
